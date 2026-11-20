@@ -1,0 +1,47 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Формат выгрузки</title><link rel="stylesheet" href="style.css"><style>article{background:white;max-width:1000px;margin:0 auto;padding:clamp(16px,5vw,58px)}article h1{font-size:clamp(29px,4vw,48px);letter-spacing:-.055em;line-height:1.1}article h2{margin:32px 0 12px;font-size:24px}article p,article li{font-size:16px;line-height:1.62}article img{max-width:100%}article table{border-collapse:collapse;width:100%;font-size:14px}article td,article th{padding:8px;text-align:left;border-bottom:1px solid #cadad3;vertical-align:top}article th{background:#e8efea}.tablewrap,pre{overflow:auto}pre{padding:15px;background:#edf2ee}li+li{margin-top:6px}</style><article><a href="index.html">← К карте</a><h1>Загрузка собственного среза</h1>
+<p>Откройте период вверху карты, раскройте «Загрузить данные», выберите файл JSON в UTF-8 и нажмите «Применить». Срезы доступны до закрытия или обновления вкладки. Файл обрабатывается в браузере. Для выбора следующего среза используйте поле «Доступные срезы».</p>
+<p>Корневой объект содержит название источника в строке <code>name</code> и непустой массив <code>slices</code>. В каждом срезе обязательны следующие поля.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Поле</th>
+<th>Содержание</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>from</code>, <code>until</code></td>
+<td>Первая и последняя даты включительно, строки YYYY-MM-DD.</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td><code>all</code>, <code>morning</code>, <code>day</code>, <code>evening</code> или <code>night</code>. Границы часов определяет поставщик, их можно уточнить в названии источника.</td>
+</tr>
+<tr>
+<td><code>tourists</code>, <code>excursionists</code></td>
+<td>Два готовых неотрицательных целых итога. Категории должны быть взаимно исключающими и вместе составлять всех визитеров среза.</td>
+</tr>
+<tr>
+<td><code>marks</code></td>
+<td>Массив объектов с уникальным целым <code>id</code> ≥ 0, строкой <code>name</code> и координатами WGS 84 в числовых полях <code>lat</code>, <code>lon</code>.</td>
+</tr>
+<tr>
+<td><code>cells</code></td>
+<td>Массив прямоугольных ячеек. Числа <code>south</code>, <code>west</code>, <code>north</code>, <code>east</code> указывают границы WGS 84. Поле <code>value</code> содержит целое неотрицательное число визитеров в ячейке за срез.</td>
+</tr>
+</tbody></table></div>
+<p>Файл до 10 МБ. Период и время суток однозначно задают срез в одном файле. Городская подложка покрывает Нижний Новгород. Клик по импортированной ячейке показывает её точное значение. Значения ячеек не суммируются в городские итоги, поскольку человек мог посетить несколько мест.</p>
+<p>Ниже минимальный импорт на числах с фотографии. Пустые массивы передают отсутствие геометрии в этой выгрузке.</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;Январь 2025 · только сводка с фотографии&quot;,
+  &quot;slices&quot;: [{
+    &quot;from&quot;: &quot;2025-01-01&quot;,
+    &quot;until&quot;: &quot;2025-01-23&quot;,
+    &quot;time&quot;: &quot;all&quot;,
+    &quot;tourists&quot;: 748151,
+    &quot;excursionists&quot;: 1689,
+    &quot;marks&quot;: [],
+    &quot;cells&quot;: []
+  }]
+}
+</code></pre>
+</article></html>
